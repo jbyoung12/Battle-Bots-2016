@@ -7,7 +7,7 @@ const int motorMaxSpeed = 255;
 
 // Set up initial speed of motors
 void initialMotorSetup() {
-    setSpeedMotors(0.8,0.8);
+    setSpeedMotors(1.0,1.0);
 }
 
 
@@ -16,7 +16,7 @@ void initialMotorSetup() {
 // moves robot forward for time t (in seconds)
 void forwardMotorsForTime(int time) {
   forwardMotors();
-  delay(time*1000);
+  delay(time);
   stopMotors();
 }
 
