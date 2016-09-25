@@ -20,23 +20,37 @@ void setSpeedMotors(int m1Speed, int m2Speed) {
   leftMotor.setSpeed(motorMaxSpeed * m1Speed);
   rightMotor.setSpeed(motorMaxSpeed * m2Speed);
 }
-// moves robot forward for time t (in seconds)
+// moves robot forward for time t (in ms)
 void forwardRobotForTime(int t) {
   forwardBothMotors();
   delay(t * 1000);
+=======
+  delay(t);
 }
-// stops both motors for certain time t (in seconds)
+void runBothMotorsForTime(int t) {
+  runBothMotors();
+  delay(t);
+}
+
+// stops both motors for certain time t (in ms)
 void stopRobotForTime(int t) {
   stopBothMotors();
   delay(t * 1000);
+=======
+  delay(t);
+}
+
+void turnRobotLeftForDegrees(int d) {
+  leftMotor.run(RELEASE);
+  rightMotor.run(FORWARD);
 }
 
 
 // ----------------------- TEST FUNCTIONS ----------------------- //
 
 // stops motors for a very long time
-void stopMotors() {
-  stopRobotForTime(100);
+void stopRobot() {
+  stopRobotForTime(100000);
 }
 
 // ----------------------- BASIC METHODS ----------------------- //
@@ -63,6 +77,14 @@ boolean checkStop() {
   }
   else
     return false;
+  setSpeedMotors(1.0,1.0);
+  leftMotor.run(FORWARD);
+  rightMotor.run(FORWARD);
+}
+// runs both motors forward
+void runBothMotors() {
+  leftMotor.run(FORWARD);
+  rightMotor.run(FORWARD);
 }
 
 
