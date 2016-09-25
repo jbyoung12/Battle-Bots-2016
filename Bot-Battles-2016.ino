@@ -7,6 +7,8 @@ void setup() {
 }
 
 void loop() {
-  forwardRobotForTime(5);
-  stopRobotForTime(2);
+  forwardRobotForTime(1000);
+  stopRobotForTime(1000);
+  turnRobotLeftForDegrees(90);
+  delay(1500);
 }
