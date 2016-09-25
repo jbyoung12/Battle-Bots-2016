@@ -13,6 +13,7 @@ void loop() {
   //  stopRobotForTime(2);
   forwardBothMotors();
   sonarCyle();
+  getLineReader();
 
   //compassCycle();  
 }
