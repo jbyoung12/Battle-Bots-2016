@@ -11,7 +11,7 @@ void setup() {
 void loop() {
   //  forwardRobotForTime(5);
   //  stopRobotForTime(2);
-  forwardBothMotors();
+  runRobotForward();
   sonarCyle();
   getLineReader();
 
