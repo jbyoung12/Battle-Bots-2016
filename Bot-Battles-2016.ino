@@ -6,14 +6,15 @@ void setup() {
   initialMotorSetup();
   setupSonar();
   setupCompass();
+  setupArmMotion();
 }
 
 void loop() {
-  //  forwardRobotForTime(5);
   //  stopRobotForTime(2);
   runRobotForward();
   sonarCyle();
-  getLineReader();
-
-  //compassCycle();  
+  Serial.println(getLineReaderRight());
+  //compassCycle();
+  //runServo();
+  turnToDegree(0);
 }

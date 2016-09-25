@@ -108,7 +108,7 @@ void setupCompass() {
 
 float desiredHeading = 0.0;
 int count = 0;
-void compassCycle(){
+float compassCycle(){
  float heading = read_heading();
   float unwrapped = unwrap_heading(heading);
   float filtered = filter_heading(unwrapped);
@@ -116,7 +116,8 @@ void compassCycle(){
 
   count++;
   if (count == 5) {
-    Serial.print("Heading (degrees): "); Serial.println(zeroed);
+    //Serial.print("Heading (degrees): "); Serial.println(zeroed);
+    return zeroed;
     count = 0;
 }
 }

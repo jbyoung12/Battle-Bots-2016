@@ -51,6 +51,13 @@ void sonarCyle() {
   //Calculate the distance (in cm) based on the speed of sound.
 
   distance = duration / 58.2;
+
+   
+  if (distance == 0)
+  {
+    distance = stopDistance + 1;
+  }
+  
   runningAverage[replacementIndex] = distance;
   
   if (replacementIndex < 9)
@@ -62,10 +69,6 @@ void sonarCyle() {
     replacementIndex = 0;
   }
 
-  if (distance == 0)
-  {
-    distance = stopDistance + 1;
-  }
 
   if (distance >= maximumRange || distance <= minimumRange) {
     /* Send a negative number to computer and Turn LED ON

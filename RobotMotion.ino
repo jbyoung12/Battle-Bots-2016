@@ -3,13 +3,15 @@
 // Objects (two motors)
 AF_DCMotor leftMotor(1, MOTOR12_64KHZ);
 AF_DCMotor rightMotor(2, MOTOR12_64KHZ);
-const int motorMaxSpeed = 255;
+//const int motorMaxSpeed = (255*.7); //use with battery pack
+const int motorMaxSpeed = (255); //use with comp
+
 const int stopDistance = 2;
 
 
 // Set up initial speed of motors
 void initialMotorSetup() {
-  	setSpeedMotors(1.0, 1.0);
+  setSpeedMotors(1.0, 1.0);
 }
 
 
@@ -17,45 +19,82 @@ void initialMotorSetup() {
 
 // sets speed of motors (input should be decimal referring to % of maxSpeed)
 void setSpeedMotors(int m1Speed, int m2Speed) {
-  	leftMotor.setSpeed(motorMaxSpeed * m1Speed);
-  	rightMotor.setSpeed(motorMaxSpeed * m2Speed);
+  leftMotor.setSpeed(motorMaxSpeed * m1Speed);
+  rightMotor.setSpeed(motorMaxSpeed * m2Speed);
 }
 
 // runs robot forward until it senses something in front of it
 void runRobotForward() {
-  if (!checkStop()) {
-    setSpeedMotors(1.0,1.0);
+  if (!avoidObstacle()) {
+    setSpeedMotors(1.0, 1.0);
     runBothMotorsForward();
   }
 }
 void runRobotBackwards() {
-  setSpeedMotors(1.0,1.0);
-  runBothMotorsBackwards(); 
+  setSpeedMotors(1.0, 1.0);
+  runBothMotorsBackwards();
 }
 
 // turning robot
 void turnRobotLeftForDegrees(int d) {
-  setSpeedMotors(0.0,1.0);
+  setSpeedMotors(0.0, 1.0);
   runBothMotorsForward();
   delay(d);
 }
 
-bool checkStop() {
+void spinTurnRight(int d) {
+  setSpeedMotors(1.0, 1.0);
+  leftMotor.run(FORWARD);
+  rightMotor.run(BACKWARD);
+  delay(d);
+  stopBothMotors();
+  setSpeedMotors(1.0, 1.0);
+}
+
+void spinTurnLeft(int d) {
+  setSpeedMotors(1.0, 1.0);
+  leftMotor.run(BACKWARD);
+  rightMotor.run(FORWARD);
+  delay(d);
+  stopBothMotors();
+  setSpeedMotors(1.0, 1.0);
+}
+bool avoidObstacle() {
   if (getDistance() <= stopDistance) {
     turnRobotLeftForDegrees(90);
     return true;
+  }
+  else if (getLineReaderRight() < 700) {
+    spinTurnRight(1500);
   }
   else {
     return false;
   }
 }
 
+//turning with compass
+void turnToDegree(int targetReading) {
+  float currentReading = compassCycle();
+  while (!(currentReading > targetReading - 2 && currentReading < targetReading + 2))
+  {
+    if (compassCycle() < targetReading) {
+      spinTurnRight(10);
+    }
+    else {
+      spinTurnLeft(10);
+    }
+    currentReading = compassCycle();
+  }
+}
+
+
+
 // ----------------------- TEST FUNCTIONS ----------------------- //
 
 
 // moves robot forward for time t (in ms)
 void forwardRobotForTime(int t) {
-  setSpeedMotors(1.0,1.0);
+  setSpeedMotors(1.0, 1.0);
   runBothMotorsForwardForTime(t);
 }
 
@@ -80,13 +119,16 @@ void runBothMotorsForward() {
   rightMotor.run(FORWARD);
 }
 void runBothMotorsBackwards() {
-  leftMotor.run(FORWARD);
-  rightMotor.run(FORWARD);
+  leftMotor.run(BACKWARD);
+  rightMotor.run(BACKWARD);
 }
 void stopBothMotors() {
   leftMotor.run(RELEASE);
   rightMotor.run(RELEASE);
 }
+
+
+
 
 
 
