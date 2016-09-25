@@ -19,13 +19,46 @@ void setSpeedMotors(int m1Speed, int m2Speed) {
     leftMotor.setSpeed(motorMaxSpeed * m1Speed);
     rightMotor.setSpeed(motorMaxSpeed * m2Speed);
 }
+
+void runRobotForward() {
+  if (!checkStop()) {
+    setSpeedMotors(1.0,1.0);
+    runBothMotorsForward();
+  }
+}
+void runRobotBackwards() {
+  setSpeedMotors(1.0,1.0);
+  runBothMotorsBackwards(); 
+}
+
+void turnRobotLeftForDegrees(int d) {
+  setSpeedMotors(0.0,1.0);
+  runBothMotorsForward();
+  delay(d);
+}
+
+bool checkStop() {
+  if (getDistance() <= 2) {
+    turnRobotLeftForDegrees(90);
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+// ----------------------- TEST FUNCTIONS ----------------------- //
+
+
 // moves robot forward for time t (in ms)
 void forwardRobotForTime(int t) {
-  forwardBothMotors();
-  delay(t);
+  setSpeedMotors(1.0,1.0);
+  runBothMotorsForwardForTime(t);
 }
-void runBothMotorsForTime(int t) {
-  runBothMotors();
+
+// runs both motors at whatever speeds they're set at
+void runBothMotorsForwardForTime(int t) {
+  runBothMotorsForward();
   delay(t);
 }
 
@@ -35,36 +68,22 @@ void stopRobotForTime(int t) {
   delay(t);
 }
 
-void turnRobotLeftForDegrees(int d) {
-  leftMotor.run(RELEASE);
-  rightMotor.run(FORWARD);
-}
-
-
-// ----------------------- TEST FUNCTIONS ----------------------- //
-
-// stops motors for a very long time
-void stopRobot() {
-  stopRobotForTime(100000);
-}
-
 // ----------------------- BASIC METHODS ----------------------- //
 
 // (THESE SHOULD NOT BE CALLED BY THEMSELVES, ALWAYS USE WITH "ForTime" equivalent)
+
+void runBothMotorsForward() {
+  leftMotor.run(FORWARD);
+  rightMotor.run(FORWARD);
+}
+void runBothMotorsBackwards() {
+  leftMotor.run(FORWARD);
+  rightMotor.run(FORWARD);
+}
 void stopBothMotors() {
   leftMotor.run(RELEASE);
   rightMotor.run(RELEASE);
 }
-// runs both motors forward
-void forwardBothMotors() {
-  setSpeedMotors(1.0,1.0);
-  leftMotor.run(FORWARD);
-  rightMotor.run(FORWARD);
-}
-// runs both motors forward
-void runBothMotors() {
-  leftMotor.run(FORWARD);
-  rightMotor.run(FORWARD);
-}
+
 
 
