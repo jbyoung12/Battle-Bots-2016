@@ -4,11 +4,12 @@
 AF_DCMotor leftMotor(1, MOTOR12_64KHZ);
 AF_DCMotor rightMotor(2, MOTOR12_64KHZ);
 const int motorMaxSpeed = 255;
+const int stopDistance = 2;
 
 
 // Set up initial speed of motors
 void initialMotorSetup() {
-    setSpeedMotors(1.0,1.0);
+  	setSpeedMotors(1.0, 1.0);
 }
 
 
@@ -16,8 +17,8 @@ void initialMotorSetup() {
 
 // sets speed of motors (input should be decimal referring to % of maxSpeed)
 void setSpeedMotors(int m1Speed, int m2Speed) {
-    leftMotor.setSpeed(motorMaxSpeed * m1Speed);
-    rightMotor.setSpeed(motorMaxSpeed * m2Speed);
+  	leftMotor.setSpeed(motorMaxSpeed * m1Speed);
+  	rightMotor.setSpeed(motorMaxSpeed * m2Speed);
 }
 
 void runRobotForward() {
@@ -52,8 +53,10 @@ bool checkStop() {
 
 // moves robot forward for time t (in ms)
 void forwardRobotForTime(int t) {
-  setSpeedMotors(1.0,1.0);
-  runBothMotorsForwardForTime(t);
+  forwardBothMotors();
+  delay(t * 1000);
+=======
+  delay(t);
 }
 
 // runs both motors at whatever speeds they're set at
@@ -65,6 +68,8 @@ void runBothMotorsForwardForTime(int t) {
 // stops both motors for certain time t (in ms)
 void stopRobotForTime(int t) {
   stopBothMotors();
+  delay(t * 1000);
+=======
   delay(t);
 }
 
