@@ -20,15 +20,15 @@ void initialMotorSetup() {
 // sets speed of motors (input should be decimal referring to % of maxSpeed)
 void setSpeedMotors(int m1Speed, int m2Speed) {
   leftMotor.setSpeed(motorMaxSpeed * m1Speed);
-  rightMotor.setSpeed(motorMaxSpeed * m2Speed);
+  rightMotor.setSpeed(motorMaxSpeed * m2Speed*.95);
 }
 
 // runs robot forward until it senses something in front of it
 void runRobotForward() {
-  if (!avoidObstacle()) {
+  //if (!avoidObstacle()) {
     setSpeedMotors(1.0, 1.0);
     runBothMotorsForward();
-  }
+ // }
 }
 void runRobotBackwards() {
   setSpeedMotors(1.0, 1.0);
@@ -48,7 +48,6 @@ void spinTurnRight(int d) {
   rightMotor.run(BACKWARD);
   delay(d);
   stopBothMotors();
-  setSpeedMotors(1.0, 1.0);
 }
 
 void spinTurnLeft(int d) {
@@ -75,7 +74,7 @@ bool avoidObstacle() {
 //turning with compass
 void turnToDegree(int targetReading) {
   float currentReading = compassCycle();
-  while (!(currentReading > targetReading - 2 && currentReading < targetReading + 2))
+  while (!(currentReading > targetReading - 5 && currentReading < targetReading + 5))
   {
     if (compassCycle() < targetReading) {
       spinTurnRight(10);

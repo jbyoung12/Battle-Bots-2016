@@ -10,11 +10,13 @@ void setup() {
 }
 
 void loop() {
-  //  stopRobotForTime(2);
-  runRobotForward();
-  sonarCyle();
-  Serial.println(getLineReaderRight());
-  //compassCycle();
-  //runServo();
-  turnToDegree(0);
+  //stopRobotForTime(2);
+  //runRobotForward();
+  //sonarCyle();
+  //Serial.println(getLineReaderRight());
+ // compassCycle();
+  runServo();
+  //Serial.println("hi");
+  //runRobotBackwards();
+  //turnToDegree(0);
 }

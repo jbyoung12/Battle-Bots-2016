@@ -113,12 +113,16 @@ float compassCycle(){
   float unwrapped = unwrap_heading(heading);
   float filtered = filter_heading(unwrapped);
   float zeroed = zero_heading(filtered);
+   Serial.println(zeroed);
 
   count++;
   if (count == 5) {
-    //Serial.print("Heading (degrees): "); Serial.println(zeroed);
     return zeroed;
+    //Serial.print("Heading (degrees): "); Serial.println(zeroed);
     count = 0;
 }
+
+  return zeroed;
+
 }
 
